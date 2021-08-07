@@ -1,0 +1,11 @@
+#!/bin/bash
+BRIGHTNESS=`xrandr --verbose | grep -m 1 -i brightness | cut -f2 -d ' '`
+NEW_BRIGHTNESS=`echo $1 + $BRIGHTNESS | bc`
+
+if (( $(echo "$NEW_BRIGHTNESS <= 2 && $NEW_BRIGHTNESS >= .3" |bc -l) ))
+then
+  echo $NEW_BRIGHTNESS
+  xrandr --output DP-2 --brightness $NEW_BRIGHTNESS
+fi
+
+# put on /usr/local/bin
